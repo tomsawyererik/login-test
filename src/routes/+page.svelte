@@ -440,6 +440,8 @@
 				Continue with Google
 			</button>
 
+			<!-- Facebook login temporarily disabled - Facebook app requirements issue -->
+			<!--
 			<button
 				type="button"
 				onclick={() => handleSocialLogin('facebook')}
@@ -454,6 +456,7 @@
 				</svg>
 				Continue with Facebook
 			</button>
+			-->
 		</div>
 	</div>
 	</div>
