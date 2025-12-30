@@ -251,8 +251,8 @@
 	</div>
 {:else if user}
 	<!-- Logged in view -->
-	<div class="home-container">
-		<div class="home-content">
+	<div class="page-container">
+		<div class="page-content">
 			<h1>Welcome Back</h1>
 			<p class="welcome-name">
 				{user.user_metadata?.full_name || user.user_metadata?.name || 'User'}
@@ -570,28 +570,25 @@
 		background-color: white;
 	}
 
-	.home-container {
+	.page-container {
 		min-height: 100vh;
 		padding: 2rem;
-		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-		display: flex;
-		justify-content: center;
-		align-items: center;
+		background: #f9fafb;
 	}
 
-	.home-content {
+	.page-content {
+		max-width: 1200px;
+		margin: 0 auto;
 		background: white;
-		border-radius: 12px;
-		padding: 3rem;
-		width: 100%;
-		max-width: 600px;
-		box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+		border-radius: 8px;
+		padding: 2rem;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 		text-align: center;
 	}
 
-	.home-content h1 {
+	.page-content h1 {
 		margin: 0 0 1rem 0;
-		font-size: 2.5rem;
+		font-size: 2rem;
 		font-weight: 700;
 		color: #1f2937;
 	}

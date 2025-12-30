@@ -16,8 +16,13 @@
 
 	const navItems = [
 		{ path: '/', label: 'Home', icon: 'home' },
+		{ path: '/training', label: 'Training', icon: 'training' },
+		{ path: '/ranking-games', label: 'Ranking Games', icon: 'ranking' },
+		{ path: '/statistics', label: 'Statistics', icon: 'statistics' },
+		{ path: '/leaderboard', label: 'Leaderboard', icon: 'leaderboard' },
+		{ path: '/exercise-rankings', label: 'Exercise Rankings', icon: 'exercise' },
 		{ path: '/profile', label: 'Profile', icon: 'user' },
-		{ path: '/about', label: 'About', icon: 'info' }
+		{ path: '/manage-clubs', label: 'Manage Clubs', icon: 'clubs' }
 	];
 
 	function isActive(path: string): boolean {
@@ -89,16 +94,40 @@
 									<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<path d="M3 10L10 3L17 10M5 10V16C5 16.5523 5.44772 17 6 17H9V13C9 12.4477 9.44772 12 10 12H10.01C10.5623 12 11.01 12.4477 11.01 13V17H14C14.5523 17 15 16.5523 15 16V10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 									</svg>
+								{:else if item.icon === 'training'}
+									<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path d="M6 14L4 16L6 18M14 14L16 16L14 18M8 6L12 10L8 14M12 6L8 10L12 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+										<path d="M3 3H17C17.5523 3 18 3.44772 18 4V16C18 16.5523 17.5523 17 17 17H3C2.44772 17 2 16.5523 2 16V4C2 3.44772 2.44772 3 3 3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+									</svg>
+								{:else if item.icon === 'ranking'}
+									<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path d="M10 2L12.5 8L19 9L14 13.5L15.5 20L10 16.5L4.5 20L6 13.5L1 9L7.5 8L10 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+									</svg>
+								{:else if item.icon === 'statistics'}
+									<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path d="M3 17V13M7 17V9M11 17V5M15 17V11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+									</svg>
+								{:else if item.icon === 'leaderboard'}
+									<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path d="M6 12L10 8L14 12M10 2V18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+										<path d="M2 18H18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+									</svg>
+								{:else if item.icon === 'exercise'}
+									<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path d="M10 2V6M10 14V18M6 10H2M18 10H14M15.6569 4.34315L13.2426 6.75736M6.75736 13.2426L4.34315 15.6569M15.6569 15.6569L13.2426 13.2426M6.75736 6.75736L4.34315 4.34315" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+										<circle cx="10" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+									</svg>
 								{:else if item.icon === 'user'}
 									<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<path d="M10 10C12.7614 10 15 7.76142 15 5C15 2.23858 12.7614 0 10 0C7.23858 0 5 2.23858 5 5C5 7.76142 7.23858 10 10 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 										<path d="M10 12C6.13401 12 3 14.134 3 18H17C17 14.134 13.866 12 10 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 									</svg>
-								{:else if item.icon === 'info'}
+								{:else if item.icon === 'clubs'}
 									<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-										<path d="M10 18C14.4183 18 18 14.4183 18 10C18 5.58172 14.4183 2 10 2C5.58172 2 2 5.58172 2 10C2 14.4183 5.58172 18 10 18Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-										<path d="M10 14V10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-										<path d="M10 6H10.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+										<path d="M10 2C11.1046 2 12 2.89543 12 4C12 5.10457 11.1046 6 10 6C8.89543 6 8 5.10457 8 4C8 2.89543 8.89543 2 10 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+										<path d="M4 14C5.10457 14 6 14.8954 6 16C6 17.1046 5.10457 18 4 18C2.89543 18 2 17.1046 2 16C2 14.8954 2.89543 14 4 14Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+										<path d="M16 14C17.1046 14 18 14.8954 18 16C18 17.1046 17.1046 18 16 18C14.8954 18 14 17.1046 14 16C14 14.8954 14.8954 14 16 14Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+										<path d="M10 6V10M4 14L8 10M16 14L12 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 									</svg>
 								{/if}
 							</div>

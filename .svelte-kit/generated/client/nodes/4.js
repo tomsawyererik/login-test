@@ -1,1 +1,1 @@
-export { default as component } from "../../../../src/routes/auth/auth-code-error/+page.svelte";
+export { default as component } from "../../../../src/routes/exercise-rankings/+page.svelte";

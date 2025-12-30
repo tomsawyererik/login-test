@@ -1,9 +1,14 @@
 {
 	"/": [],
-	"/about": [],
 	"/auth/auth-code-error": [],
 	"/auth/callback": [
 		"src/routes/auth/callback/+server.ts"
 	],
-	"/profile": []
+	"/exercise-rankings": [],
+	"/leaderboard": [],
+	"/manage-clubs": [],
+	"/profile": [],
+	"/ranking-games": [],
+	"/statistics": [],
+	"/training": []
 }
