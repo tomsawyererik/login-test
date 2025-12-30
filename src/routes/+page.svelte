@@ -252,10 +252,35 @@
 {:else if user}
 	<!-- Logged in view -->
 	<div class="page-container">
-		<h1>Welcome Back</h1>
-		<p class="welcome-name">
-			{user.user_metadata?.full_name || user.user_metadata?.name || 'User'}
-		</p>
+		<h1>
+			Welcome back, {(() => {
+				const fullName = user.user_metadata?.full_name || user.user_metadata?.name || 'User';
+				const firstName = fullName.split(' ')[0];
+				return firstName;
+			})()}!
+		</h1>
+		
+		<div class="stats-grid">
+			<div class="stat-box stat-box-blue">
+				<h2 class="stat-title">Shooting level</h2>
+				<p class="stat-value">1</p>
+			</div>
+			
+			<div class="stat-box stat-box-green">
+				<h2 class="stat-title">Total Badges</h2>
+				<p class="stat-value">0</p>
+			</div>
+			
+			<div class="stat-box stat-box-purple">
+				<h2 class="stat-title">This Week</h2>
+				<p class="stat-value">0</p>
+			</div>
+			
+			<div class="stat-box stat-box-orange">
+				<h2 class="stat-title">Avg Accuracy</h2>
+				<p class="stat-value">0.00%</p>
+			</div>
+		</div>
 	</div>
 {:else}
 	<!-- Login view -->
@@ -576,19 +601,57 @@
 	}
 
 	.page-container h1 {
-		margin: 0 0 1rem 0;
+		margin: 0 0 2rem 0;
 		font-size: 2rem;
 		font-weight: 700;
 		color: #1f2937;
 		text-align: left;
 	}
 
-	.welcome-name {
+	.stats-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+		gap: 1.5rem;
+		margin-top: 2rem;
+	}
+
+	.stat-box {
+		border-radius: 8px;
+		padding: 1.5rem;
+		box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 4px 10px -2px rgba(0, 0, 0, 0.15);
+		border: none;
+	}
+
+	.stat-box-blue {
+		background: #3b82f6;
+	}
+
+	.stat-box-green {
+		background: #10b981;
+	}
+
+	.stat-box-purple {
+		background: #8b5cf6;
+	}
+
+	.stat-box-orange {
+		background: #f97316;
+	}
+
+	.stat-title {
+		margin: 0 0 0.75rem 0;
+		font-size: 0.875rem;
+		font-weight: 600;
+		color: rgba(255, 255, 255, 0.9);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	.stat-value {
 		margin: 0;
-		font-size: 1.5rem;
-		color: #667eea;
-		font-weight: 500;
-		text-align: left;
+		font-size: 2rem;
+		font-weight: 700;
+		color: white;
 	}
 
 </style>
