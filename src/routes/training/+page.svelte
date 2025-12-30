@@ -16,6 +16,21 @@
 
 	const currentExercise = $derived(exercises.find(ex => ex.id === selectedExercise));
 
+	let distanceSection: HTMLDivElement;
+	let startSection: HTMLDivElement;
+
+	function scrollToDistance() {
+		if (distanceSection) {
+			distanceSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+		}
+	}
+
+	function scrollToStart() {
+		if (startSection) {
+			startSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+		}
+	}
+
 	// Convert kebab-case to PascalCase (e.g., "alarm-clock-off" -> "AlarmClockOff")
 	function kebabToPascal(str: string): string {
 		return str
@@ -107,6 +122,7 @@
 						onclick={() => {
 							selectedExercise = exercise.id;
 							distance = null; // Reset distance when selecting new exercise
+							setTimeout(() => scrollToDistance(), 100);
 						}}
 					>
 						<div class="exercise-icon" style="background-color: {exercise.color || '#e5e7eb'};">
@@ -138,7 +154,7 @@
 	</div>
 
 	{#if selectedExercise}
-		<div class="distance-section">
+		<div class="distance-section" bind:this={distanceSection}>
 			<h2 class="section-header">2. Select distance</h2>
 			
 			<div class="distance-grid">
@@ -146,7 +162,10 @@
 					<button
 						class="distance-card"
 						class:selected={distance === distanceValue}
-						onclick={() => distance = distanceValue}
+						onclick={() => {
+							distance = distanceValue;
+							setTimeout(() => scrollToStart(), 100);
+						}}
 					>
 						<div class="distance-circle">
 							<span class="distance-number">{distanceValue}</span>
@@ -159,7 +178,7 @@
 	{/if}
 
 	{#if selectedExercise && distance && currentExercise}
-		<div class="start-section">
+		<div class="start-section" bind:this={startSection}>
 			<button
 				class="start-card"
 				onclick={() => goto(`/training/session?exercise=${selectedExercise}&distance=${distance}`)}
