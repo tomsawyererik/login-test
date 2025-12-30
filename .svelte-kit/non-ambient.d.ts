@@ -27,7 +27,7 @@ export {};
 
 declare module "$app/types" {
 	export interface AppTypes {
-		RouteId(): "/" | "/about" | "/auth" | "/auth/auth-code-error" | "/auth/callback" | "/auth/login" | "/exercise-rankings" | "/leaderboard" | "/manage-clubs" | "/profile" | "/ranking-games" | "/statistics" | "/training";
+		RouteId(): "/" | "/about" | "/auth" | "/auth/auth-code-error" | "/auth/callback" | "/auth/login" | "/exercise-rankings" | "/leaderboard" | "/manage-clubs" | "/profile" | "/ranking-games" | "/statistics" | "/training" | "/training/session";
 		RouteParams(): {
 			
 		};
@@ -44,9 +44,10 @@ declare module "$app/types" {
 			"/profile": Record<string, never>;
 			"/ranking-games": Record<string, never>;
 			"/statistics": Record<string, never>;
-			"/training": Record<string, never>
+			"/training": Record<string, never>;
+			"/training/session": Record<string, never>
 		};
-		Pathname(): "/" | "/about" | "/about/" | "/auth" | "/auth/" | "/auth/auth-code-error" | "/auth/auth-code-error/" | "/auth/callback" | "/auth/callback/" | "/auth/login" | "/auth/login/" | "/exercise-rankings" | "/exercise-rankings/" | "/leaderboard" | "/leaderboard/" | "/manage-clubs" | "/manage-clubs/" | "/profile" | "/profile/" | "/ranking-games" | "/ranking-games/" | "/statistics" | "/statistics/" | "/training" | "/training/";
+		Pathname(): "/" | "/about" | "/about/" | "/auth" | "/auth/" | "/auth/auth-code-error" | "/auth/auth-code-error/" | "/auth/callback" | "/auth/callback/" | "/auth/login" | "/auth/login/" | "/exercise-rankings" | "/exercise-rankings/" | "/leaderboard" | "/leaderboard/" | "/manage-clubs" | "/manage-clubs/" | "/profile" | "/profile/" | "/ranking-games" | "/ranking-games/" | "/statistics" | "/statistics/" | "/training" | "/training/" | "/training/session" | "/training/session/";
 		ResolvedPathname(): `${"" | `/${string}`}${ReturnType<AppTypes['Pathname']>}`;
 		Asset(): "/robots.txt" | string & {};
 	}
