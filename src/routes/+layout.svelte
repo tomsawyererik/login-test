@@ -12,6 +12,7 @@
 	let user = $state<User | null>(null);
 	let checkingAuth = $state(true);
 	let isExpanded = $state(true);
+	let panelWidth = $derived(isExpanded ? 280 : 64);
 
 	const navItems = [
 		{ path: '/', label: 'Home', icon: 'home' },
@@ -71,30 +72,6 @@
 	<div class="app-container">
 		<aside class="side-panel" class:collapsed={!isExpanded}>
 			<nav class="nav-menu">
-				<button 
-					class="toggle-button" 
-					onclick={() => isExpanded = !isExpanded}
-					aria-label={isExpanded ? 'Collapse sidebar' : 'Expand sidebar'}
-				>
-					<svg 
-						class="toggle-arrow" 
-						class:rotated={!isExpanded}
-						width="20" 
-						height="20" 
-						viewBox="0 0 20 20" 
-						fill="none" 
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<path 
-							d="M12.5 15L7.5 10L12.5 5" 
-							stroke="currentColor" 
-							stroke-width="2" 
-							stroke-linecap="round" 
-							stroke-linejoin="round"
-						/>
-					</svg>
-				</button>
-				
 				<div class="nav-items">
 					{#each navItems as item}
 						<a
@@ -133,6 +110,30 @@
 				</div>
 			</nav>
 		</aside>
+		<button 
+			class="toggle-button" 
+			style="left: {panelWidth - 14}px;"
+			onclick={() => isExpanded = !isExpanded}
+			aria-label={isExpanded ? 'Collapse sidebar' : 'Expand sidebar'}
+		>
+			<svg 
+				class="toggle-arrow" 
+				class:rotated={!isExpanded}
+				width="20" 
+				height="20" 
+				viewBox="0 0 20 20" 
+				fill="none" 
+				xmlns="http://www.w3.org/2000/svg"
+			>
+				<path 
+					d="M12.5 15L7.5 10L12.5 5" 
+					stroke="currentColor" 
+					stroke-width="2" 
+					stroke-linecap="round" 
+					stroke-linejoin="round"
+				/>
+			</svg>
+		</button>
 		<main class="main-content">
 			{@render children()}
 		</main>
@@ -147,6 +148,7 @@
 		min-height: 100vh;
 		width: 100%;
 		overflow-x: hidden;
+		position: relative;
 	}
 
 	.side-panel {
@@ -175,9 +177,8 @@
 	.toggle-button {
 		position: absolute;
 		top: 1rem;
-		right: -15px;
-		width: 30px;
-		height: 30px;
+		width: 28px;
+		height: 28px;
 		border-radius: 50%;
 		background-color: #374151;
 		border: 2px solid #4b5563;
@@ -186,8 +187,8 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		z-index: 10;
-		transition: all 0.2s ease;
+		z-index: 20;
+		transition: left 0.3s ease;
 		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 	}
 
