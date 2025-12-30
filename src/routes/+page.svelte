@@ -251,97 +251,12 @@
 	</div>
 {:else if user}
 	<!-- Logged in view -->
-	<div class="login-container">
-		<div class="login-card">
-			<h1>✓ You're Logged In!</h1>
-			<p class="subtitle">Here's your user data (for testing)</p>
-
-			<div class="user-data">
-				<div class="data-section">
-					<h3>User Information</h3>
-				<div class="data-item">
-					<span class="data-label">User ID:</span>
-					<code>{user.id}</code>
-				</div>
-				<div class="data-item">
-					<span class="data-label">Email:</span>
-					<code>{user.email || 'Not provided'}</code>
-				</div>
-				<div class="data-item">
-					<span class="data-label">Email Verified:</span>
-					<code>{user.email_confirmed_at ? 'Yes' : 'No'}</code>
-				</div>
-				<div class="data-item">
-					<span class="data-label">Created At:</span>
-					<code>{user.created_at ? new Date(user.created_at).toLocaleString() : 'N/A'}</code>
-				</div>
-				<div class="data-item">
-					<span class="data-label">Last Sign In:</span>
-					<code>{user.last_sign_in_at ? new Date(user.last_sign_in_at).toLocaleString() : 'N/A'}</code>
-				</div>
-				</div>
-
-				{#if user.user_metadata}
-					<div class="data-section">
-						<h3>User Metadata</h3>
-					<div class="data-item">
-						<span class="data-label">Full Name:</span>
-						<code>{user.user_metadata.full_name || user.user_metadata.name || 'Not provided'}</code>
-					</div>
-					<div class="data-item">
-						<span class="data-label">Avatar URL:</span>
-						<code>{user.user_metadata.avatar_url || user.user_metadata.picture || 'Not provided'}</code>
-					</div>
-						{#if user.user_metadata.avatar_url || user.user_metadata.picture}
-							<div class="avatar-container">
-								<img 
-									src={user.user_metadata.avatar_url || user.user_metadata.picture} 
-									alt="User avatar"
-									class="avatar"
-								/>
-							</div>
-						{/if}
-					</div>
-				{/if}
-
-				{#if session}
-					<div class="data-section">
-						<h3>Session Information</h3>
-					<div class="data-item">
-						<span class="data-label">Access Token:</span>
-						<code class="token">{session.access_token.substring(0, 50)}...</code>
-					</div>
-					<div class="data-item">
-						<span class="data-label">Token Type:</span>
-						<code>{session.token_type}</code>
-					</div>
-					<div class="data-item">
-						<span class="data-label">Expires At:</span>
-						<code>{session.expires_at ? new Date(session.expires_at * 1000).toLocaleString() : 'N/A'}</code>
-					</div>
-					</div>
-				{/if}
-
-				<div class="data-section">
-					<h3>Raw User Object (JSON)</h3>
-					<pre class="json-display">{JSON.stringify(user, null, 2)}</pre>
-				</div>
-			</div>
-
-			<button 
-				type="button" 
-				onclick={handleLogout} 
-				disabled={loading} 
-				class="btn btn-danger"
-			>
-				{loading ? 'Logging out...' : 'Reset / Logout'}
-			</button>
-
-			{#if message}
-				<div class="message" class:error={message.includes('error') || message.includes('Error')}>
-					{message}
-				</div>
-			{/if}
+	<div class="welcome-container">
+		<div class="welcome-card">
+			<h1>Welcome Back</h1>
+			<p class="welcome-name">
+				{user.user_metadata?.full_name || user.user_metadata?.name || 'User'}
+			</p>
 		</div>
 	</div>
 {:else}
@@ -463,13 +378,30 @@
 {/if}
 
 <style>
+	:global(html, body) {
+		margin: 0;
+		padding: 0;
+		overflow-x: hidden;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	:global(*) {
+		box-sizing: border-box;
+	}
+
 	.login-container {
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		min-height: 100vh;
+		max-height: 100vh;
+		height: 100vh;
 		padding: 1rem;
 		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+		overflow-y: auto;
+		overflow-x: hidden;
+		width: 100%;
 	}
 
 	.login-card {
@@ -479,6 +411,8 @@
 		width: 100%;
 		max-width: 420px;
 		box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+		overflow-y: auto;
+		max-height: calc(100vh - 2rem);
 	}
 
 	h1 {
@@ -545,6 +479,7 @@
 
 	input {
 		width: 100%;
+		max-width: 100%;
 		padding: 0.75rem;
 		border: 1px solid #d1d5db;
 		border-radius: 6px;
@@ -635,137 +570,44 @@
 		background-color: white;
 	}
 
-	.btn-facebook {
-		background-color: #1877f2;
-		color: white;
-		border-color: #1877f2;
-	}
-
-	.btn-facebook:hover:not(:disabled) {
-		background-color: #166fe5;
-	}
-
-	.user-data {
-		margin: 2rem 0;
-	}
-
-	.data-section {
-		margin-bottom: 2rem;
-		padding: 1.5rem;
-		background-color: #f9fafb;
-		border-radius: 8px;
-		border: 1px solid #e5e7eb;
-	}
-
-	.data-section h3 {
-		margin: 0 0 1rem 0;
-		font-size: 1.125rem;
-		font-weight: 600;
-		color: #1f2937;
-	}
-
-	.data-item {
-		display: flex;
-		flex-direction: column;
-		margin-bottom: 1rem;
-		gap: 0.25rem;
-	}
-
-	.data-item:last-child {
-		margin-bottom: 0;
-	}
-
-	.data-item .data-label {
-		font-size: 0.75rem;
-		font-weight: 600;
-		color: #6b7280;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-	}
-
-	.data-item code {
-		font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-		font-size: 0.875rem;
-		background-color: white;
-		padding: 0.5rem 0.75rem;
-		border-radius: 4px;
-		border: 1px solid #e5e7eb;
-		color: #1f2937;
-		word-break: break-all;
-	}
-
-	.data-item code.token {
-		font-size: 0.75rem;
-		color: #6b7280;
-	}
-
-	.avatar-container {
-		margin-top: 1rem;
+	.welcome-container {
 		display: flex;
 		justify-content: center;
-	}
-
-	.avatar {
-		width: 80px;
-		height: 80px;
-		border-radius: 50%;
-		border: 2px solid #e5e7eb;
-	}
-
-	.json-display {
-		background-color: #1f2937;
-		color: #10b981;
+		align-items: center;
+		min-height: 100vh;
+		max-height: 100vh;
+		height: 100vh;
 		padding: 1rem;
-		border-radius: 6px;
-		font-size: 0.75rem;
-		overflow-x: auto;
-		max-height: 300px;
+		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 		overflow-y: auto;
-		font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-		line-height: 1.5;
+		overflow-x: hidden;
+		width: 100%;
 	}
 
-	.btn-danger {
-		background-color: #ef4444;
-		color: white;
-		margin-top: 2rem;
+	.welcome-card {
+		background: white;
+		border-radius: 12px;
+		padding: 3rem;
+		width: 100%;
+		max-width: 500px;
+		box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+		text-align: center;
+		overflow-y: auto;
+		max-height: calc(100vh - 2rem);
 	}
 
-	.btn-danger:hover:not(:disabled) {
-		background-color: #dc2626;
+	.welcome-card h1 {
+		margin: 0 0 1rem 0;
+		font-size: 2.5rem;
+		font-weight: 700;
+		color: #1f2937;
 	}
 
-	.help-box {
-		margin-top: 1.5rem;
-		padding: 1rem;
-		background-color: #fef3c7;
-		border: 1px solid #fbbf24;
-		border-radius: 6px;
-		font-size: 0.875rem;
-		color: #92400e;
+	.welcome-name {
+		margin: 0;
+		font-size: 1.5rem;
+		color: #667eea;
+		font-weight: 500;
 	}
 
-	.help-box p {
-		margin: 0.5rem 0;
-	}
-
-	.help-box p:first-child {
-		margin-top: 0;
-	}
-
-	.help-box ul {
-		margin: 0.5rem 0 0 1.5rem;
-		padding: 0;
-	}
-
-	.help-box li {
-		margin: 0.25rem 0;
-	}
-
-	.help-box code {
-		background-color: rgba(0, 0, 0, 0.1);
-		padding: 0.125rem 0.25rem;
-		border-radius: 3px;
-		font-size: 0.8em;
-	}
 </style>
