@@ -27,7 +27,7 @@ export {};
 
 declare module "$app/types" {
 	export interface AppTypes {
-		RouteId(): "/" | "/auth" | "/auth/auth-code-error" | "/auth/callback";
+		RouteId(): "/" | "/auth" | "/auth/auth-code-error" | "/auth/callback" | "/auth/login";
 		RouteParams(): {
 			
 		};
@@ -35,9 +35,10 @@ declare module "$app/types" {
 			"/": Record<string, never>;
 			"/auth": Record<string, never>;
 			"/auth/auth-code-error": Record<string, never>;
-			"/auth/callback": Record<string, never>
+			"/auth/callback": Record<string, never>;
+			"/auth/login": Record<string, never>
 		};
-		Pathname(): "/" | "/auth" | "/auth/" | "/auth/auth-code-error" | "/auth/auth-code-error/" | "/auth/callback" | "/auth/callback/";
+		Pathname(): "/" | "/auth" | "/auth/" | "/auth/auth-code-error" | "/auth/auth-code-error/" | "/auth/callback" | "/auth/callback/" | "/auth/login" | "/auth/login/";
 		ResolvedPathname(): `${"" | `/${string}`}${ReturnType<AppTypes['Pathname']>}`;
 		Asset(): "/robots.txt" | string & {};
 	}
