@@ -251,8 +251,8 @@
 	</div>
 {:else if user}
 	<!-- Logged in view -->
-	<div class="welcome-container">
-		<div class="welcome-card">
+	<div class="home-container">
+		<div class="home-content">
 			<h1>Welcome Back</h1>
 			<p class="welcome-name">
 				{user.user_metadata?.full_name || user.user_metadata?.name || 'User'}
@@ -570,33 +570,26 @@
 		background-color: white;
 	}
 
-	.welcome-container {
+	.home-container {
+		min-height: 100vh;
+		padding: 2rem;
+		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		min-height: 100vh;
-		max-height: 100vh;
-		height: 100vh;
-		padding: 1rem;
-		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-		overflow-y: auto;
-		overflow-x: hidden;
-		width: 100%;
 	}
 
-	.welcome-card {
+	.home-content {
 		background: white;
 		border-radius: 12px;
 		padding: 3rem;
 		width: 100%;
-		max-width: 500px;
+		max-width: 600px;
 		box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 		text-align: center;
-		overflow-y: auto;
-		max-height: calc(100vh - 2rem);
 	}
 
-	.welcome-card h1 {
+	.home-content h1 {
 		margin: 0 0 1rem 0;
 		font-size: 2.5rem;
 		font-weight: 700;
