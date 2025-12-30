@@ -110,7 +110,10 @@
 						</div>
 						<div class="exercise-content">
 							<div class="exercise-header">
-								<h3 class="exercise-title">{exercise.name}</h3>
+								<div class="exercise-title-section">
+									<p class="exercise-number">Övning {exercise.order}</p>
+									<h3 class="exercise-title">{exercise.name}</h3>
+								</div>
 								<div class="exercise-level">
 									<span class="level-badge" style="background-color: {exercise.color || '#3b82f6'};">
 										Level {exercise.level}
@@ -235,13 +238,28 @@
 		gap: 1rem;
 	}
 
+	.exercise-title-section {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+
+	.exercise-number {
+		margin: 0;
+		font-size: 0.875rem;
+		font-weight: 600;
+		color: #6b7280;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
 	.exercise-title {
 		margin: 0;
 		font-size: 1.125rem;
 		font-weight: 700;
 		color: #1f2937;
 		line-height: 1.4;
-		flex: 1;
 	}
 
 	.exercise-level {
