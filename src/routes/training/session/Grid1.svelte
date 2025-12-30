@@ -3,6 +3,19 @@
 	
 	let scores = $state<Array<string>>([]);
 
+	const scoreCounts = $derived({
+		BRA: scores.filter(s => s === 'BRA').length,
+		OK: scores.filter(s => s === 'OK').length,
+		UNDERKÄNT: scores.filter(s => s === 'UNDERKÄNT').length
+	});
+
+	const totalClicks = $derived(scores.length);
+
+	function getPercentage(result: string): number {
+		if (totalClicks === 0) return 0;
+		return Math.round((scoreCounts[result as keyof typeof scoreCounts] / totalClicks) * 100);
+	}
+
 	function registerScore(result: string) {
 		scores = [...scores, result];
 		console.log('Registered score:', result);
@@ -19,20 +32,59 @@
 		class="grid-button button-bra"
 		onclick={() => registerScore('BRA')}
 	>
-		BRA
+		<div class="button-content">
+			<span class="button-text">BRA</span>
+			{#if totalClicks > 0}
+				<span class="button-percentage">{getPercentage('BRA')}%</span>
+			{/if}
+		</div>
 	</button>
 	<button 
 		class="grid-button button-ok"
 		onclick={() => registerScore('OK')}
 	>
-		OK
+		<div class="button-content">
+			<span class="button-text">OK</span>
+			{#if totalClicks > 0}
+				<span class="button-percentage">{getPercentage('OK')}%</span>
+			{/if}
+		</div>
 	</button>
 	<button 
 		class="grid-button button-underkant"
 		onclick={() => registerScore('UNDERKÄNT')}
 	>
-		UNDERKÄNT
+		<div class="button-content">
+			<span class="button-text">UNDERKÄNT</span>
+			{#if totalClicks > 0}
+				<span class="button-percentage">{getPercentage('UNDERKÄNT')}%</span>
+			{/if}
+		</div>
 	</button>
+</div>
+
+<div class="summary-section">
+	<h3 class="summary-title">Sammanfattning</h3>
+	<div class="summary-content">
+		<div class="summary-total">
+			<span class="summary-label">Totalt:</span>
+			<span class="summary-value">{totalClicks}</span>
+		</div>
+		<div class="summary-breakdown">
+			<div class="summary-item">
+				<span class="summary-item-label">BRA:</span>
+				<span class="summary-item-value">{scoreCounts.BRA}</span>
+			</div>
+			<div class="summary-item">
+				<span class="summary-item-label">OK:</span>
+				<span class="summary-item-value">{scoreCounts.OK}</span>
+			</div>
+			<div class="summary-item">
+				<span class="summary-item-label">UNDERKÄNT:</span>
+				<span class="summary-item-value">{scoreCounts.UNDERKÄNT}</span>
+			</div>
+		</div>
+	</div>
 </div>
 
 <div class="complete-section">
@@ -66,6 +118,28 @@
 		box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 		width: 100%;
 		min-width: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.button-content {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.25rem;
+	}
+
+	.button-text {
+		font-size: 1.125rem;
+		font-weight: 600;
+		color: white;
+	}
+
+	.button-percentage {
+		font-size: 0.875rem;
+		font-weight: 500;
+		color: rgba(255, 255, 255, 0.8);
 	}
 
 	.button-bra {
@@ -89,6 +163,72 @@
 	.grid-button:active {
 		transform: translateY(0);
 		box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+	}
+
+	.summary-section {
+		margin-top: 2rem;
+		padding: 1.5rem;
+		background: white;
+		border-radius: 8px;
+		box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+	}
+
+	.summary-title {
+		margin: 0 0 1rem 0;
+		font-size: 1.125rem;
+		font-weight: 600;
+		color: #1f2937;
+	}
+
+	.summary-content {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.summary-total {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding-bottom: 1rem;
+		border-bottom: 1px solid #e5e7eb;
+	}
+
+	.summary-label {
+		font-size: 1rem;
+		font-weight: 600;
+		color: #374151;
+	}
+
+	.summary-value {
+		font-size: 1.25rem;
+		font-weight: 700;
+		color: #1f2937;
+	}
+
+	.summary-breakdown {
+		display: flex;
+		justify-content: space-around;
+		gap: 1rem;
+	}
+
+	.summary-item {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.25rem;
+		flex: 1;
+	}
+
+	.summary-item-label {
+		font-size: 0.875rem;
+		color: #6b7280;
+	}
+
+	.summary-item-value {
+		font-size: 1.125rem;
+		font-weight: 600;
+		color: #1f2937;
 	}
 
 	.complete-section {
