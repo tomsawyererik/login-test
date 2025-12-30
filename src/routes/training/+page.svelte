@@ -2,12 +2,27 @@
 	import { createClient } from '$lib/supabase/client';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
+	import * as LucideIcons from 'lucide-svelte';
 
 	let selectedMode = $state<'shooting' | 'pointing'>('shooting');
 	let selectedExercise = $state<string | null>(null);
-	let exercises = $state<Array<{ id: string; name: string; catergory: string; order: number; color: string; short_desc: string; level: number }>>([]);
+	let exercises = $state<Array<{ id: string; name: string; catergory: string; order: number; color: string; short_desc: string; level: number; icon: string }>>([]);
 	let loading = $state(true);
 	let supabase = $state<ReturnType<typeof createClient> | null>(null);
+
+	// Convert kebab-case to PascalCase (e.g., "alarm-clock-off" -> "AlarmClockOff")
+	function kebabToPascal(str: string): string {
+		return str
+			.split('-')
+			.map(word => word.charAt(0).toUpperCase() + word.slice(1))
+			.join('');
+	}
+
+	function getIconComponent(iconName: string) {
+		if (!iconName) return null;
+		const componentName = kebabToPascal(iconName);
+		return (LucideIcons as any)[componentName] || null;
+	}
 
 	onMount(() => {
 		if (browser) {
@@ -23,7 +38,7 @@
 		try {
 			const { data, error } = await supabase
 				.from('exercises')
-				.select('id, name, catergory, order, color, short_desc, level')
+				.select('id, name, catergory, order, color, short_desc, level, icon')
 				.eq('catergory', selectedMode === 'shooting' ? 'Shooting' : 'Pointing')
 				.order('order', { ascending: true });
 
@@ -86,7 +101,12 @@
 						onclick={() => selectedExercise = exercise.id}
 					>
 						<div class="exercise-icon" style="background-color: {exercise.color || '#e5e7eb'};">
-							<!-- Icon placeholder - will add icons later -->
+							{#if exercise.icon}
+								{@const IconComponent = getIconComponent(exercise.icon)}
+								{#if IconComponent}
+									<svelte:component this={IconComponent} size={32} color="white" />
+								{/if}
+							{/if}
 						</div>
 						<div class="exercise-content">
 							<div class="exercise-header">
