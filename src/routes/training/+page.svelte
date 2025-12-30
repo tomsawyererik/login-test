@@ -1,54 +1,53 @@
 <script lang="ts">
+	import { createClient } from '$lib/supabase/client';
+	import { onMount } from 'svelte';
+	import { browser } from '$app/environment';
+
 	let selectedMode = $state<'shooting' | 'pointing'>('shooting');
-	let selectedExercise = $state<number | null>(null);
+	let selectedExercise = $state<string | null>(null);
+	let exercises = $state<Array<{ id: string; name: string; catergory: string; order: number; color: string; short_desc: string; level: number }>>([]);
+	let loading = $state(true);
+	let supabase = $state<ReturnType<typeof createClient> | null>(null);
 
-	// Exercise data structure - will be replaced with database calls later
-	type Exercise = {
-		id: number;
-		title: string;
-		level: number;
-		difficulty: string;
-		description: string;
-		iconColor: string;
-	};
-
-	const exercises: Record<'shooting' | 'pointing', Exercise[]> = {
-		shooting: [
-			{
-				id: 1,
-				title: 'Exercise 1: Basic Target',
-				level: 1,
-				difficulty: 'Beginner',
-				description: 'Practice hitting a target ball in the center square rectangle.',
-				iconColor: '#3b82f6'
-			},
-			{
-				id: 2,
-				title: 'Exercise 2: With Obstacles',
-				level: 1,
-				difficulty: 'Beginner',
-				description: 'Hit the target ball in the middle with an obstacle ball 40cm in front.',
-				iconColor: '#8b5cf6'
-			}
-		],
-		pointing: [
-			{
-				id: 3,
-				title: 'Exercise 1: Pointing Basics',
-				level: 1,
-				difficulty: 'Beginner',
-				description: 'Learn the fundamentals of pointing technique.',
-				iconColor: '#10b981'
-			}
-		]
-	};
-
-	$effect(() => {
-		// Reset selection when mode changes
-		selectedExercise = null;
+	onMount(() => {
+		if (browser) {
+			supabase = createClient();
+			fetchExercises();
+		}
 	});
 
-	const currentExercises = $derived(exercises[selectedMode]);
+	async function fetchExercises() {
+		if (!supabase) return;
+		
+		loading = true;
+		try {
+			const { data, error } = await supabase
+				.from('exercises')
+				.select('id, name, catergory, order, color, short_desc, level')
+				.eq('catergory', selectedMode === 'shooting' ? 'Shooting' : 'Pointing')
+				.order('order', { ascending: true });
+
+			if (error) {
+				console.error('Error fetching exercises:', error);
+				exercises = [];
+			} else {
+				exercises = data || [];
+			}
+		} catch (error) {
+			console.error('Error fetching exercises:', error);
+			exercises = [];
+		} finally {
+			loading = false;
+		}
+	}
+
+	$effect(() => {
+		// Reset selection and fetch exercises when mode changes
+		selectedExercise = null;
+		if (supabase) {
+			fetchExercises();
+		}
+	});
 </script>
 
 <div class="page-container">
@@ -74,31 +73,36 @@
 	<div class="exercises-section">
 		<h2 class="section-header">1. Choose Exercise</h2>
 		
-		<div class="exercises-grid">
-			{#each currentExercises as exercise (exercise.id)}
-				<button
-					class="exercise-card"
-					class:selected={selectedExercise === exercise.id}
-					onclick={() => selectedExercise = exercise.id}
-				>
-					<div class="exercise-icon" style="background-color: {exercise.iconColor};">
-						<!-- Icon placeholder - will add icons later -->
-					</div>
-					<div class="exercise-content">
-						<div class="exercise-header">
-							<h3 class="exercise-title">{exercise.title}</h3>
-							<div class="exercise-level">
-								<span class="level-badge" style="background-color: {exercise.iconColor};">
-									Level {exercise.level}
-								</span>
-								<p class="difficulty">{exercise.difficulty}</p>
-							</div>
+		{#if loading}
+			<p>Loading exercises...</p>
+		{:else if exercises.length === 0}
+			<p>No exercises found for {selectedMode}.</p>
+		{:else}
+			<div class="exercises-grid">
+				{#each exercises as exercise (exercise.id)}
+					<button
+						class="exercise-card"
+						class:selected={selectedExercise === exercise.id}
+						onclick={() => selectedExercise = exercise.id}
+					>
+						<div class="exercise-icon" style="background-color: {exercise.color || '#e5e7eb'};">
+							<!-- Icon placeholder - will add icons later -->
 						</div>
-						<p class="exercise-description">{exercise.description}</p>
-					</div>
-				</button>
-			{/each}
-		</div>
+						<div class="exercise-content">
+							<div class="exercise-header">
+								<h3 class="exercise-title">{exercise.name}</h3>
+								<div class="exercise-level">
+									<span class="level-badge" style="background-color: {exercise.color || '#3b82f6'};">
+										Level {exercise.level}
+									</span>
+								</div>
+							</div>
+							<p class="exercise-description">{exercise.short_desc}</p>
+						</div>
+					</button>
+				{/each}
+			</div>
+		{/if}
 	</div>
 </div>
 
@@ -194,6 +198,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		background-color: #e5e7eb;
 	}
 
 	.exercise-content {
