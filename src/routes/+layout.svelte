@@ -155,13 +155,14 @@
 		width: 280px;
 		background-color: #1f2937;
 		color: white;
-		flex-shrink: 0;
 		overflow-y: auto;
 		overflow-x: hidden;
 		height: 100vh;
-		position: sticky;
+		position: fixed;
+		left: 0;
 		top: 0;
 		transition: width 0.3s ease;
+		z-index: 10;
 	}
 
 	.side-panel.collapsed {
@@ -279,9 +280,9 @@
 	}
 
 	.main-content {
-		flex: 1;
 		width: 100%;
 		min-width: 0;
 		overflow-x: hidden;
+		margin-left: 0;
 	}
 </style>
