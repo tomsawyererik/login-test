@@ -1,0 +1,1 @@
+import{f as o,a as s}from"../chunks/DXwTCEs2.js";import"../chunks/B3t_4XfY.js";var p=o('<div class="page-container svelte-15qxkyp"><h1 class="svelte-15qxkyp">Exercise Rankings</h1></div>');function i(a){var e=p();s(a,e)}export{i as component};

@@ -935,6 +935,10 @@ function attributes(attrs, css_hash, classes, styles, flags = 0) {
   }
   return attr_str;
 }
+function attr_class(value, hash, directives) {
+  var result = to_class(value, hash, directives);
+  return result ? ` class="${escape_html(result, true)}"` : "";
+}
 export {
   ASYNC as A,
   BOUNDARY_EFFECT as B,
@@ -972,5 +976,6 @@ export {
   is_passive_event as u,
   render as v,
   head as w,
-  attr as x
+  attr as x,
+  attr_class as y
 };

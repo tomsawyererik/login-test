@@ -1,0 +1,1 @@
+import{f as o,a as s}from"../chunks/DXwTCEs2.js";import"../chunks/B3t_4XfY.js";var e=o('<div class="page-container svelte-d07ngg"><h1 class="svelte-d07ngg">Statistics</h1></div>');function r(a){var t=e();s(a,t)}export{r as component};

@@ -10,12 +10,19 @@ return {
 	assets: new Set(["robots.txt"]),
 	mimeTypes: {".txt":"text/plain"},
 	_: {
-		client: {start:"_app/immutable/entry/start.BBPL8HHK.js",app:"_app/immutable/entry/app.CSoRSNzj.js",imports:["_app/immutable/entry/start.BBPL8HHK.js","_app/immutable/chunks/CyARlm8f.js","_app/immutable/chunks/DXRCqbTo.js","_app/immutable/chunks/DkZyUXcW.js","_app/immutable/entry/app.CSoRSNzj.js","_app/immutable/chunks/DXRCqbTo.js","_app/immutable/chunks/BHW0Qtbi.js","_app/immutable/chunks/OFRCU7Vd.js","_app/immutable/chunks/CWuD6kz4.js","_app/immutable/chunks/DkZyUXcW.js","_app/immutable/chunks/BGUX66UH.js","_app/immutable/chunks/J88NasHr.js"],stylesheets:[],fonts:[],uses_env_dynamic_public:false},
+		client: {start:"_app/immutable/entry/start.SbPW8xwF.js",app:"_app/immutable/entry/app.Cdts38HO.js",imports:["_app/immutable/entry/start.SbPW8xwF.js","_app/immutable/chunks/BPrQo6Oi.js","_app/immutable/chunks/e8XAVhbW.js","_app/immutable/chunks/CvEj2LdQ.js","_app/immutable/chunks/CKHj2-aw.js","_app/immutable/entry/app.Cdts38HO.js","_app/immutable/chunks/e8XAVhbW.js","_app/immutable/chunks/Dl4wrC1f.js","_app/immutable/chunks/CvInUrh1.js","_app/immutable/chunks/DXwTCEs2.js","_app/immutable/chunks/CKHj2-aw.js","_app/immutable/chunks/B2-igs9x.js","_app/immutable/chunks/DagzaRCX.js","_app/immutable/chunks/CvEj2LdQ.js"],stylesheets:[],fonts:[],uses_env_dynamic_public:false},
 		nodes: [
 			__memo(() => import('./nodes/0.js')),
 			__memo(() => import('./nodes/1.js')),
 			__memo(() => import('./nodes/2.js')),
-			__memo(() => import('./nodes/3.js'))
+			__memo(() => import('./nodes/3.js')),
+			__memo(() => import('./nodes/4.js')),
+			__memo(() => import('./nodes/5.js')),
+			__memo(() => import('./nodes/6.js')),
+			__memo(() => import('./nodes/7.js')),
+			__memo(() => import('./nodes/8.js')),
+			__memo(() => import('./nodes/9.js')),
+			__memo(() => import('./nodes/10.js'))
 		],
 		remotes: {
 			
@@ -41,6 +48,55 @@ return {
 				params: [],
 				page: null,
 				endpoint: __memo(() => import('./entries/endpoints/auth/callback/_server.ts.js'))
+			},
+			{
+				id: "/exercise-rankings",
+				pattern: /^\/exercise-rankings\/?$/,
+				params: [],
+				page: { layouts: [0,], errors: [1,], leaf: 4 },
+				endpoint: null
+			},
+			{
+				id: "/leaderboard",
+				pattern: /^\/leaderboard\/?$/,
+				params: [],
+				page: { layouts: [0,], errors: [1,], leaf: 5 },
+				endpoint: null
+			},
+			{
+				id: "/manage-clubs",
+				pattern: /^\/manage-clubs\/?$/,
+				params: [],
+				page: { layouts: [0,], errors: [1,], leaf: 6 },
+				endpoint: null
+			},
+			{
+				id: "/profile",
+				pattern: /^\/profile\/?$/,
+				params: [],
+				page: { layouts: [0,], errors: [1,], leaf: 7 },
+				endpoint: null
+			},
+			{
+				id: "/ranking-games",
+				pattern: /^\/ranking-games\/?$/,
+				params: [],
+				page: { layouts: [0,], errors: [1,], leaf: 8 },
+				endpoint: null
+			},
+			{
+				id: "/statistics",
+				pattern: /^\/statistics\/?$/,
+				params: [],
+				page: { layouts: [0,], errors: [1,], leaf: 9 },
+				endpoint: null
+			},
+			{
+				id: "/training",
+				pattern: /^\/training\/?$/,
+				params: [],
+				page: { layouts: [0,], errors: [1,], leaf: 10 },
+				endpoint: null
 			}
 		],
 		prerendered_routes: new Set([]),

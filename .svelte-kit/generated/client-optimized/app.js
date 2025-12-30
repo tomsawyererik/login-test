@@ -4,14 +4,28 @@ export const nodes = [
 	() => import('./nodes/0'),
 	() => import('./nodes/1'),
 	() => import('./nodes/2'),
-	() => import('./nodes/3')
+	() => import('./nodes/3'),
+	() => import('./nodes/4'),
+	() => import('./nodes/5'),
+	() => import('./nodes/6'),
+	() => import('./nodes/7'),
+	() => import('./nodes/8'),
+	() => import('./nodes/9'),
+	() => import('./nodes/10')
 ];
 
 export const server_loads = [];
 
 export const dictionary = {
 		"/": [2],
-		"/auth/auth-code-error": [3]
+		"/auth/auth-code-error": [3],
+		"/exercise-rankings": [4],
+		"/leaderboard": [5],
+		"/manage-clubs": [6],
+		"/profile": [7],
+		"/ranking-games": [8],
+		"/statistics": [9],
+		"/training": [10]
 	};
 
 export const hooks = {

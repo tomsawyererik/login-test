@@ -1,0 +1,1 @@
+import{f as e,a as o}from"../chunks/DXwTCEs2.js";import"../chunks/B3t_4XfY.js";var s=e('<div class="page-container svelte-1ql5tjk"><h1 class="svelte-1ql5tjk">Manage Clubs</h1></div>');function n(a){var t=s();o(a,t)}export{n as component};

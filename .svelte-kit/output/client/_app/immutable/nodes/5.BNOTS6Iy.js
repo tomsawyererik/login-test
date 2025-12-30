@@ -1,0 +1,1 @@
+import{f as o,a as r}from"../chunks/DXwTCEs2.js";import"../chunks/B3t_4XfY.js";var t=o('<div class="page-container svelte-c59208"><h1 class="svelte-c59208">Leaderboard</h1></div>');function c(a){var e=t();r(a,e)}export{c as component};
