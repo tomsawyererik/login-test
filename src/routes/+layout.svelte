@@ -12,7 +12,7 @@
 	let supabase = $state<ReturnType<typeof createClient> | null>(null);
 	let user = $state<User | null>(null);
 	let checkingAuth = $state(true);
-	let isExpanded = $state(true);
+	let isExpanded = $state(false);
 	let panelWidth = $derived(isExpanded ? 280 : 64);
 
 	const navItems = [
@@ -127,6 +127,20 @@
 				<ChevronLeft size={20} />
 			</div>
 		</button>
+		{#if isExpanded}
+			<div 
+				class="backdrop"
+				onclick={() => isExpanded = false}
+				role="button"
+				tabindex="0"
+				onkeydown={(e) => {
+					if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') {
+						isExpanded = false;
+					}
+				}}
+				aria-label="Close sidebar"
+			></div>
+		{/if}
 		<main class="main-content">
 			{@render children()}
 		</main>
@@ -265,6 +279,17 @@
 		opacity: 0;
 		width: 0;
 		overflow: hidden;
+	}
+
+	.backdrop {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: rgba(0, 0, 0, 0.1);
+		z-index: 5;
+		cursor: pointer;
 	}
 
 	.main-content {
