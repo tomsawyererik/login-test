@@ -75,7 +75,7 @@
 		<p>Level: {exercise.level}</p>
 		
 		{#if ModuleComponent}
-			<svelte:component this={ModuleComponent} exercise={exercise} distance={distanceParam} />
+			<svelte:component this={ModuleComponent} exercise={exercise} distance={distanceParam} supabase={supabase} exerciseId={exerciseId} />
 		{:else}
 			<p>No module specified for this exercise. Please add a 'module' field to the exercise in Supabase.</p>
 		{/if}

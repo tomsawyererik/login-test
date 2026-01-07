@@ -1,7 +1,16 @@
 <script lang="ts">
-	let { exercise, distance } = $props();
+	import { goto } from '$app/navigation';
+	import type { SupabaseClient } from '@supabase/supabase-js';
+	
+	let { exercise, distance, supabase, exerciseId } = $props<{
+		exercise: any;
+		distance: string | null;
+		supabase: SupabaseClient | null;
+		exerciseId: string | null;
+	}>();
 	
 	let scores = $state<Array<string>>([]);
+	let saving = $state(false);
 
 	const scoreCounts = $derived({
 		BRA: scores.filter(s => s === 'BRA').length,
@@ -21,9 +30,56 @@
 		console.log('Registered score:', result);
 	}
 
-	function handleComplete() {
-		// TODO: Save session results and navigate back
-		console.log('Completing session with scores:', scores);
+	async function handleComplete() {
+		if (!supabase || !exerciseId || !distance || totalClicks === 0) {
+			console.error('Missing required data for saving session');
+			return;
+		}
+
+		saving = true;
+		try {
+			// Get current user
+			const { data: { session }, error: authError } = await supabase.auth.getSession();
+			
+			if (authError || !session?.user) {
+				console.error('Error getting user session:', authError);
+				alert('Kunde inte spara session. Vänligen logga in igen.');
+				return;
+			}
+
+			// Save to training_sessions table
+			const { data, error } = await supabase
+				.from('training_sessions')
+				.insert({
+					user_id: session.user.id,
+					exercise_id: exerciseId,
+					distance: parseInt(distance),
+					results: {
+						BRA: scoreCounts.BRA,
+						OK: scoreCounts.OK,
+						UNDERKÄNT: scoreCounts.UNDERKÄNT
+					},
+					total_count: totalClicks
+				})
+				.select()
+				.single();
+
+			if (error) {
+				console.error('Error saving session:', error);
+				alert('Kunde inte spara session. Försök igen.');
+				return;
+			}
+
+			console.log('Session saved successfully:', data);
+			
+			// Navigate back to training page
+			goto('/training');
+		} catch (error) {
+			console.error('Unexpected error saving session:', error);
+			alert('Ett oväntat fel uppstod. Försök igen.');
+		} finally {
+			saving = false;
+		}
 	}
 </script>
 
@@ -91,9 +147,9 @@
 	<button 
 		class="complete-button"
 		onclick={handleComplete}
-		disabled={scores.length === 0}
+		disabled={scores.length === 0 || saving}
 	>
-		Avsluta
+		{saving ? 'Sparar...' : 'Avsluta'}
 	</button>
 </div>
 

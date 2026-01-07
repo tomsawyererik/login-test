@@ -146,7 +146,7 @@
 		</main>
 	</div>
 {:else}
-	{@render children()}
+{@render children()}
 {/if}
 
 <style>
